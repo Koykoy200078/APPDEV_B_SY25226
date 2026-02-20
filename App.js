@@ -1,11 +1,15 @@
+import { verifyInstallation } from 'nativewind';
 import React from 'react';
 import { View } from 'react-native';
 
 import AppNavigationNi from './src/navigations';
 
 const App = () => {
+
+  verifyInstallation();
+  
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1">
       <AppNavigationNi />
     </View>
   );
