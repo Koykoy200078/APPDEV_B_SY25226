@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import { ROUTES } from '../../utils';
+import { userLogin } from '../../app/api/auth';
 
 const Login = () => {
   // GETTER //SETTER
@@ -22,8 +23,8 @@ const Login = () => {
 
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <CustomTextInput
-          label={'Email Address'}
-          placeholder={'Email Address'}
+          label={'Student ID'}
+          placeholder={'Student ID'}
           value={val => setEmailAdd(val)}
           containerStyle={{
             width: '100%',
@@ -69,11 +70,11 @@ const Login = () => {
           fontWeight: '800',
           fontSize: 20,
         }}
-        onPress={() => {
-          if (emailAdd === '' && password === '') {
-            Alert.alert('Incorrect Credentials', 'Please try again!');
-            return;
-          }
+        onPress={async () => {
+          await userLogin({
+            student_id: emailAdd,
+            password: password,
+          });
         }}
       />
 
