@@ -5,27 +5,32 @@ import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import { ROUTES } from '../../utils';
-import { userLogin } from '../../app/api/auth';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../../app/reducers/auth';
 
 const Login = () => {
   // GETTER //SETTER
-  const [emailAdd, setEmailAdd] = useState('');
+  const [studentID, setStudentID] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigation = useNavigation();
+  const { isLoading } = useSelector(state => state.auth);
 
-  //   useEffect(() => {}, [emailAdd, password]);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  //   useEffect(() => {}, [studentID, password]);
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: 'black' }}>{emailAdd}</Text>
+      <Text style={{ color: 'black' }}>{studentID}</Text>
       <Text style={{ color: 'black' }}>{password}</Text>
 
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <CustomTextInput
           label={'Student ID'}
           placeholder={'Student ID'}
-          value={val => setEmailAdd(val)}
+          value={val => setStudentID(val)}
           containerStyle={{
             width: '100%',
             marginBottom: 15,
@@ -70,11 +75,19 @@ const Login = () => {
           fontWeight: '800',
           fontSize: 20,
         }}
+        loading={isLoading}
         onPress={async () => {
-          await userLogin({
-            student_id: emailAdd,
-            password: password,
-          });
+          // await userLogin({
+          //   student_id: studentID,
+          //   password: password,
+          // });
+
+          dispatch(
+            userLogin({
+              student_id: studentID,
+              password: password,
+            }),
+          );
         }}
       />
 
